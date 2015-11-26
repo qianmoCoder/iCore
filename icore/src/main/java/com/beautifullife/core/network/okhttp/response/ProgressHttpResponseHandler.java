@@ -1,5 +1,6 @@
 package com.beautifullife.core.network.okhttp.response;
 
+import com.beautifullife.core.rx.schedulers.AndroidSchedulers;
 import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
@@ -11,7 +12,6 @@ import java.io.InputStream;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 

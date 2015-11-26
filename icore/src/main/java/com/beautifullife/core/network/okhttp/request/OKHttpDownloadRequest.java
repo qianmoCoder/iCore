@@ -53,9 +53,7 @@ public class OKHttpDownloadRequest extends OKHttpRequest {
         client.networkInterceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                // 拦截
                 Response originalResponse = chain.proceed(chain.request());
-                // 包装响应体并返回
                 ProgressResponseBody responseBody = new ProgressResponseBody(originalResponse.body(), progressHttpResponseHandler);
                 return originalResponse.newBuilder().body(responseBody).build();
             }

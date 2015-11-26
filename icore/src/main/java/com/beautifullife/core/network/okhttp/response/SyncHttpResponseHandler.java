@@ -3,13 +3,13 @@ package com.beautifullife.core.network.okhttp.response;
 
 import android.util.Pair;
 
+import com.beautifullife.core.rx.schedulers.AndroidSchedulers;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public abstract class SyncHttpResponseHandler implements ResponseHandlerInterface {

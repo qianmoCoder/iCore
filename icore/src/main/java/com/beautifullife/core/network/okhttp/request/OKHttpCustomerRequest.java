@@ -74,19 +74,12 @@ public class OKHttpCustomerRequest extends OKHttpRequest {
         return context;
     }
 
-
-    /**
-     * 使用HTTP POST提交请求到服务。这个例子提交了一个markdown文档到web服务，以HTML方式渲染markdown。因为整个请求体都在内存中，因此避免使用此api提交大文档（大于1MB）
-     */
     public RequestBody postString() throws IOException {
 //        String postBody = "" + "Releases\n" + "--------\n" + "\n" + " * _1.0_ May 6, 2013\n" + " * _1.1_ June 15, 2013\n" + " * _1.2_ August 11, 2013\n";
         RequestBody formBody = RequestBody.create(MEDIA_TYPE_TXT_X_MARKDOWN, getContext());
         return formBody;
     }
 
-    /**
-     * 以流的方式POST提交请求体。请求体的内容由流写入产生。这个例子是流直接写入Okio的BufferedSink。你的程序可能会使用OutputStream，你可以使用BufferedSink.outputStream()来获取。
-     */
     public RequestBody postStream() throws Exception {
         RequestBody requestBody = new RequestBody() {
             @Override
@@ -121,7 +114,6 @@ public class OKHttpCustomerRequest extends OKHttpRequest {
         return requestBody;
     }
 
-    // 使用FormEncodingBuilder来构建和HTML<form>标签相同效果的请求体。键值对将使用一种HTML兼容形式的URL编码来进行编码。
     public RequestBody postFormParameters() {
         RequestBody formBody = new FormEncodingBuilder().add("search", "Jurassic Park").build();
         return formBody;
@@ -130,7 +122,6 @@ public class OKHttpCustomerRequest extends OKHttpRequest {
     private static final String IMGUR_CLIENT_ID = "...";
     ;
 
-    // MultipartBuilder可以构建复杂的请求体，与HTML文件上传形式兼容。多块请求体中每块请求都是一个请求体，可以定义自己的请求头。这些请求头可以用来描述这块请求，例如他的Content-Disposition。如果Content-Length和Content-Type可用的话，他们会被自动添加到请求头中。
     public RequestBody postMultipartRequest() {
         RequestBody requestBody = new MultipartBuilder().type(MultipartBuilder.FORM).addPart(Headers.of("Content-Disposition", "form-data; name=\"title\""), RequestBody.create(null, "Square Logo"))
                 .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""), RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png"))).build();

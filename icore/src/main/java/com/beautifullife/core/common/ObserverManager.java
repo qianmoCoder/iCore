@@ -27,31 +27,18 @@ public class ObserverManager {
         private static ObserverManager instance = new ObserverManager();
     }
 
-    /**
-     * 所有观察者容器
-     */
     private MultiHashMap<Integer, WeakReference<Observer>> observers = new MultiHashMap<Integer, WeakReference<Observer>>();
 
-    /**
-     * 回调到ui线程的handler
-     */
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    /**
-     * 注册ui层的观察者
-     */
     public void registerObserver(int action, Observer observer) {
         synchronized (observers) {
             observers.put(action, new WeakReference<Observer>(observer));
         }
     }
 
-    /**
-     * 注销观察者，相对耗时
-     */
     public void unRegisterObserver(Observer observer) {
         synchronized (observers) {
-            //因为使用的是若引用，所以需要手动遍历整个map。
             Set<Map.Entry<Integer, ArrayList<WeakReference<Observer>>>> entrySet = observers.entrySet();
             for (Map.Entry<Integer, ArrayList<WeakReference<Observer>>> entry : entrySet) {
                 ArrayList<WeakReference<Observer>> list = entry.getValue();
@@ -68,9 +55,6 @@ public class ObserverManager {
         }
     }
 
-    /**
-     * 注销观察者监听的某一个事件
-     */
     public void unRegisterObserver(int action, Observer observer) {
         synchronized (observers) {
             ArrayList<WeakReference<Observer>> list = observers.get(action);
@@ -87,9 +71,6 @@ public class ObserverManager {
         }
     }
 
-    /**
-     * 通知数据给观察者
-     */
     public void notifyUi(final int action, final Object obj, final int stateCode) {
         ArrayList<WeakReference<Observer>> listeners = observers.get(action);
         if (listeners != null) {
@@ -112,9 +93,6 @@ public class ObserverManager {
 
     }
 
-    /**
-     * 拷贝listener ,去除空对象
-     */
     private ArrayList<WeakReference<Observer>> copyListener(ArrayList<WeakReference<Observer>> listeners) {
         ArrayList<WeakReference<Observer>> copy = new ArrayList<WeakReference<Observer>>();
         synchronized (observers) {

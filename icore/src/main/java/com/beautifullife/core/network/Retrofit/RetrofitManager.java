@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.beautifullife.core.network.okhttp.OKHttpManager;
 import com.beautifullife.core.network.okhttp.response.ResponseHandlerInterface;
+import com.beautifullife.core.rx.schedulers.AndroidSchedulers;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request.Builder;
@@ -18,7 +19,6 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class RetrofitManager {
