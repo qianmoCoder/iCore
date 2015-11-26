@@ -10,12 +10,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * Created by admin on 2015/9/9.
  */
 public class PinYinUtil {
-    /**
-     * 获取首个单词
-     *
-     * @param chinese
-     * @return
-     */
+
     public static String getFirstWord(String chinese) {
         StringBuffer pybf = new StringBuffer();
         char[] arr = chinese.toCharArray();
@@ -40,9 +35,6 @@ public class PinYinUtil {
         return pybf.toString().replaceAll("\\W", "").trim();
     }
 
-    /**
-     * 获取首字母
-     */
     public static String getFirstSpell(String chinese) {
         StringBuffer pybf = new StringBuffer();
         char[] arr = chinese.toCharArray();
@@ -69,9 +61,6 @@ public class PinYinUtil {
         return pybf.toString().replaceAll("\\W", "").trim();
     }
 
-    /**
-     * 获取全拼
-     */
     public static String getFullSpell(String chinese) {
         StringBuffer pybf = new StringBuffer();
         char[] arr = chinese.toCharArray();

@@ -81,12 +81,6 @@ public class AndroidUtil {
         return "";
     }
 
-    /**
-     * 网络是否已连接
-     *
-     * @param context
-     * @return
-     */
     public static boolean isNetworkConnected(Context context) {
         NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
@@ -96,28 +90,15 @@ public class AndroidUtil {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    /**
-     * 取消或者删除所有状态栏通知
-     *
-     * @param context
-     */
     public static void cancelAllNotification(Context context) {
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
     }
 
-    /**
-     * 调整程序声音类型为媒体播放声音，并且与媒体播放声音大小一致
-     *
-     * @param context
-     */
     public static void adjustVoiceToSystemSame(Context context) {
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_SAME, 0);
     }
 
-    /**
-     * 隐藏输入法（根据activity当前焦点所在控件的WindowToken）
-     */
     public static void hideSoftInput(Activity activity, View editText) {
         View view;
         if (editText == null) {
@@ -132,9 +113,6 @@ public class AndroidUtil {
         }
     }
 
-    /**
-     * 显示输入法（根据activity当前焦点所在控件的WindowToken）
-     */
     public static void showSoftInput(Activity activity, View editText) {
         View view;
         if (editText == null) {
@@ -149,23 +127,11 @@ public class AndroidUtil {
         }
     }
 
-    /**
-     * Cmwap网络是否已连接
-     *
-     * @param context
-     * @return
-     */
     public static boolean isNetworkConnectedByCmwap(Context context) {
         NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         return networkInfo != null && networkInfo.isConnected() && networkInfo.getExtraInfo() != null && networkInfo.getExtraInfo().toLowerCase().contains("cmwap");
     }
 
-    /**
-     * 判断是否绑定了手机号
-     *
-     * @param carrier
-     * @return
-     */
     public static boolean isBundPhone(String carrier) {
         boolean isBunding = true;
         if (TextUtils.isEmpty(carrier) || carrier.equals("NIL") || carrier.equals("ROBOT")) {
@@ -174,17 +140,10 @@ public class AndroidUtil {
         return isBunding;
     }
 
-    /**
-     * 应用是否已经安装
-     *
-     * @param context
-     * @param packageName
-     * @return
-     */
     public static boolean isAppInstalled(Context context, String packageName) {
         try {
             // mContext.getPackageInfo(String packageName, int
-            // flags)第二个参数flags为0：因为不需要该程序的其他信息，只需返回程序的基本信息。
+            // flags)
             return context.getPackageManager().getPackageInfo(packageName, 0) != null;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -192,25 +151,13 @@ public class AndroidUtil {
         return false;
     }
 
-    /**
-     * Wifi网络是否已连接
-     *
-     * @param context
-     * @return
-     */
     public static boolean isNetworkConnectedByWifi(Context context) {
         NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    /**
-     * 开启GPU加速
-     *
-     * @param window
-     */
     public static void openGPU(Window window) {
         try {
-            // 反射出来硬件加速参数，兼容2.3版本
             Field field = WindowManager.LayoutParams.class.getField("FLAG_HARDWARE_ACCELERATED");
             Field field2 = WindowManager.LayoutParams.class.getField("FLAG_HARDWARE_ACCELERATED");
             if (field != null && field2 != null) {
@@ -221,14 +168,6 @@ public class AndroidUtil {
         }
     }
 
-
-    /**
-     * 根据包名判断应用是否在前台运行
-     *
-     * @param context
-     * @param packageName
-     * @return
-     */
     public static boolean isAppOnForeground(Context context, String packageName) {
         if (packageName != null) {
             // Returns a list of application processes that are running on the
@@ -267,11 +206,6 @@ public class AndroidUtil {
         return packageName.equalsIgnoreCase(pName);
     }
 
-    /**
-     * 申请成为默认短信
-     *
-     * @param context
-     */
     public static void applyForDefaultSms(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
             return;

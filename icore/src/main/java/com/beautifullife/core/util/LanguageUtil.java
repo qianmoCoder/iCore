@@ -51,11 +51,6 @@ public class LanguageUtil {
         return new Locale(language, country);
     }
 
-    /**
-     * 设置完成后，跳转到首页
-     * @param context
-     * @param locale
-     */
     public static void setSystemLocale(Context context, Locale locale) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -65,10 +60,8 @@ public class LanguageUtil {
     }
 
     /**
-     * context --> getBaseContext();
      * 此方法需要在setContextView之前调用
      *
-     * @param context
      */
     public static void reloadLanguageAction(Context context) {
         Locale locale = getSystemLocale(context);

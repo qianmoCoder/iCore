@@ -71,11 +71,6 @@ public class MultiHashMap<K, V> {
         }
     }
 
-    /**
-     * 低效率, 需要遍历
-     *
-     * @param val
-     */
     public void removeValue(V val) {
         for (Map.Entry<K, ArrayList<V>> e : model.entrySet()) {
             ArrayList<V> ls = e.getValue();
