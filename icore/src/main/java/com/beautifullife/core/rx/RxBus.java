@@ -5,22 +5,6 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-/**
- * Created by admin on 2015/10/14.
- * <p>
- * send(new TapEvent())
- * <p>
- * toObserverable().subscribe(new Action1<Object>() {
- *
- * @Override public void call(Object event) {
- * if(event instanceof  TapEvent){
- * //TODO:
- * }else if(event instanceof  otherEvent){
- * //TODO:
- * }
- * }
- * });
- */
 public class RxBus {
     //private final PublishSubject<Object> _bus = PublishSubject.create();
 
