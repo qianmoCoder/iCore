@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="icore_dividerLinearLayout">
+        <attr name="icore_divider" format="reference" />
+        <attr name="icore_divider_height" format="dimension" />
+        <attr name="icore_divider_margin_left" format="dimension" />
+        <attr name="icore_divider_margin_right" format="dimension" />
+    </declare-styleable>
+</resources>
