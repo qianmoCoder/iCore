@@ -4,15 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Telephony;
 import android.telephony.TelephonyManager;
@@ -29,6 +36,8 @@ import java.util.List;
  * Created by admin on 2015/9/9.
  */
 public class AndroidUtil {
+
+    private static final String UNIQUENESS_ID = "UNIQUENESS_ID";
 
     public static PackageInfo getPackageInfo(Context context) {
         PackageManager pm = context.getPackageManager();
@@ -212,6 +221,34 @@ public class AndroidUtil {
         Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.getPackageName());
         context.startActivity(intent);
+    }
+
+    public static Bundle getMetaDataBundleByApplication(Context context) throws PackageManager.NameNotFoundException {
+        String packageName = context.getPackageName();
+        PackageManager pm = context.getPackageManager();
+        ApplicationInfo applicationInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+        return applicationInfo.metaData;
+    }
+
+    public static Bundle getMetaDataBundleByActivity(Activity context) throws PackageManager.NameNotFoundException {
+        ComponentName componentName = context.getComponentName();
+        PackageManager pm = context.getPackageManager();
+        ActivityInfo activityInfo = pm.getActivityInfo(componentName, PackageManager.GET_META_DATA);
+        return activityInfo.metaData;
+    }
+
+    public static Bundle getMetaDataBundleByService(Context context, Service service) throws PackageManager.NameNotFoundException {
+        ComponentName componentName = new ComponentName(context, service.getClass());
+        PackageManager pm = context.getPackageManager();
+        ServiceInfo serviceInfo = pm.getServiceInfo(componentName, PackageManager.GET_META_DATA);
+        return serviceInfo.metaData;
+    }
+
+    public static Bundle getMetaDataBundleByReciver(Context context, BroadcastReceiver receiver) throws PackageManager.NameNotFoundException {
+        ComponentName componentName = new ComponentName(context, receiver.getClass());
+        PackageManager pm = context.getPackageManager();
+        ActivityInfo activitInfo = pm.getReceiverInfo(componentName, PackageManager.GET_META_DATA);
+        return activitInfo.metaData;
     }
 
 }
