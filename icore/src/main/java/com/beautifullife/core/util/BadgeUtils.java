@@ -1,10 +1,16 @@
 package com.beautifullife.core.util;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class BadgeUtils {
@@ -18,6 +24,22 @@ public class BadgeUtils {
     public static void clearBadge(Context context) {
         setBadgeSamsung(context, 0);
         clearBadgeSony(context);
+    }
+
+    private static void setBadgeOfMIUI(Context context, int resId, int count) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(context)
+                .setContentTitle("title").setContentText("text").setSmallIcon(resId);
+        Notification notification = builder.build();
+        try {
+            Field field = notification.getClass().getDeclaredField("extraNotification");
+            Object extraNotification = field.get(notification);
+            Method method = extraNotification.getClass().getDeclaredMethod("setMessageCount", int.class);
+            method.invoke(extraNotification, count);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        notificationManager.notify(0, notification);
     }
 
 
@@ -47,6 +69,15 @@ public class BadgeUtils {
         intent.putExtra("com.sonyericsson.home.intent.extra.badge.PACKAGE_NAME", context.getPackageName());
 
         context.sendBroadcast(intent);
+    }
+
+    private static void setBadgeNova(Context context, int count) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("tag", context.getPackageName() + "/" +
+                AndroidUtil.getLauncherPackageName(context));
+        contentValues.put("count", count);
+        context.getContentResolver().insert(Uri.parse("content://com.teslacoilsw.notifier/unread_count"),
+                contentValues);
     }
 
 

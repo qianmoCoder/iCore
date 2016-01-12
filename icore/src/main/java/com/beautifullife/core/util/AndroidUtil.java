@@ -13,6 +13,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -251,4 +252,25 @@ public class AndroidUtil {
         return activitInfo.metaData;
     }
 
+    public static int heapSize(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        int heapSize = manager.getLargeMemoryClass();
+        return heapSize;
+    }
+
+    public static String getLauncherPackageName(Context context) {
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        final ResolveInfo res = context.getPackageManager().resolveActivity(intent, 0);
+        if (res.activityInfo == null) {
+            // should not happen. A home is always installed, isn't it?
+            return null;
+        }
+        if (res.activityInfo.packageName.equals("android")) {
+            // 有多个桌面程序存在，且未指定默认项时；
+            return null;
+        } else {
+            return res.activityInfo.packageName;
+        }
+    }
 }
